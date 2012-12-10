@@ -12,12 +12,7 @@ object SclemeSbtPlugin extends Plugin {
 }
 """
 
-  val sclemeMain = SettingKey[String]("sclemeMain")
-
-  println("SclemeSbtPlugin loaded 4")
-
   override lazy val settings = Seq[Setting[_]](
-    sclemeMain := "main",
     (sourceGenerators in Compile) <+= runGenerators)
 
   private def runGenerators =
@@ -33,7 +28,7 @@ object SclemeSbtPlugin extends Plugin {
 
         log.info("[scleme] Code generation started")
 
-        val coreFile = srcDir / Scleme.corePath.stripSuffix("/")
+        val coreFile = targetDir / Scleme.corePath.stripSuffix("/")
         IO.write(coreFile, Scleme.core)
 
         val scalaSources = files flatMap { file =>
